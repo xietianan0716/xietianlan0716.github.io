@@ -1,38 +1,162 @@
-<div class="product-card" data-id="1">
-  <h2 class="product-title">Product 1</h2>
-  <button class="open-modal">View Details</button>
-</div>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海外小店</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .product-title {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        
+        .open-modal {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        
+        .open-modal:hover {
+            background-color: #0056b3;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal.visible {
+            display: block;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        #close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 20px;
+        }
+        
+        #close-modal:hover,
+        #close-modal:focus {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>欢迎来到海外小店!</h1>
+    
+    <div class="products-container">
+        <div class="product-card" data-id="1">
+            <h2 class="product-title">Product 1</h2>
+            <button class="open-modal">View Details</button>
+        </div>
 
-<div class="product-card" data-id="2">
-  <h2 class="product-title">Product 2</h2>
-  <button class="open-modal">View Details</button>
-</div>
+        <div class="product-card" data-id="2">
+            <h2 class="product-title">Product 2</h2>
+            <button class="open-modal">View Details</button>
+        </div>
 
-<!-- Add additional product cards here -->
+        <!-- Add additional product cards here -->
+    </div>
 
-<script>
-  const modal = document.getElementById('modal');
-  const openButtons = document.querySelectorAll('.open-modal');
-  const closeButton = document.getElementById('close-modal');
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal">&times;</span>
+            <div id="modal-body">
+                <h2 id="product-name"></h2>
+                <p id="product-description"></p>
+            </div>
+        </div>
+    </div>
 
-  openButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const productId = this.parentElement.getAttribute('data-id');
-      // Logic to populate modal with product details based on productId
-      modal.classList.add('visible');
-    });
-  });
+    <script>
+        const modal = document.getElementById('modal');
+        const openButtons = document.querySelectorAll('.open-modal');
+        const closeButton = document.getElementById('close-modal');
 
-  closeButton.addEventListener('click', function() {
-    if (modal.classList.contains('visible')) {
-      modal.classList.remove('visible');
-    }
-  });
+        openButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.parentElement.getAttribute('data-id');
+                const productName = this.parentElement.querySelector('.product-title').textContent;
+                
+                // Logic to populate modal with product details based on productId
+                document.getElementById('product-name').textContent = productName;
+                document.getElementById('product-description').textContent = `Details for product ${productId}`;
+                modal.classList.add('visible');
+            });
+        });
 
-  // Optionally close modal when clicking outside
-  window.addEventListener('click', function(event) {
-    if (event.target === modal && modal.classList.contains('visible')) {
-      modal.classList.remove('visible');
-    }
-  });
-</script>
+        closeButton.addEventListener('click', function() {
+            if (modal.classList.contains('visible')) {
+                modal.classList.remove('visible');
+            }
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal && modal.classList.contains('visible')) {
+                modal.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>
