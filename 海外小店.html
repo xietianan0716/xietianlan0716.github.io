@@ -1,25 +1,38 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>海外小店</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const button = document.querySelector('[data-action="doSomething"]');
-            button.addEventListener('click', function() {
-                // Your JavaScript functionality
-                if(button.classList.contains('active')) {
-                    console.log('Button is active');
-                } else {
-                    console.log('Button is not active');
-                }
-            });
-        });
-    </script>
-</head>
-<body>
-    <h1>欢迎来到海外小店!</h1>
-    <button data-action="doSomething" class="active">点击我</button>
-</body>
-</html>
+<div class="product-card" data-id="1">
+  <h2 class="product-title">Product 1</h2>
+  <button class="open-modal">View Details</button>
+</div>
+
+<div class="product-card" data-id="2">
+  <h2 class="product-title">Product 2</h2>
+  <button class="open-modal">View Details</button>
+</div>
+
+<!-- Add additional product cards here -->
+
+<script>
+  const modal = document.getElementById('modal');
+  const openButtons = document.querySelectorAll('.open-modal');
+  const closeButton = document.getElementById('close-modal');
+
+  openButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const productId = this.parentElement.getAttribute('data-id');
+      // Logic to populate modal with product details based on productId
+      modal.classList.add('visible');
+    });
+  });
+
+  closeButton.addEventListener('click', function() {
+    if (modal.classList.contains('visible')) {
+      modal.classList.remove('visible');
+    }
+  });
+
+  // Optionally close modal when clicking outside
+  window.addEventListener('click', function(event) {
+    if (event.target === modal && modal.classList.contains('visible')) {
+      modal.classList.remove('visible');
+    }
+  });
+</script>
